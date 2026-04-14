@@ -1,18 +1,73 @@
-# NutriTrack Smart (Frontend)
+# 🚀 CalorieCraft
 
-A fully interactive, frontend-only smart food recommendation system using HTML, CSS, and JavaScript.
+A smart, frontend-only nutrition tracking web app that provides **intelligent meal recommendations**, calorie tracking, and a modern dashboard experience.
 
-## Features
-- **User Profiling:** Calculates BMI and Target Daily Calories (BMR + TDEE).
-- **Core Tracking:** Log meals and see real-time updates on remaining caloric budget.
-- **Context-Aware Recommendations:** A custom rule engine that recommends meals based on:
-  - Current time of day
-  - Remaining daily calories
-  - User's ultimate goal (lose, maintain, gain)
-- **Data Persistence:** Uses `localStorage` to keep your meals and profile data safe upon refreshing.
-- **Premium UI:** Glassmorphism, deep dark aesthetics, and smooth micro-animations.
+---
 
-## Setup & Execution
-This is a standard frontend application with no build tools or package managers required.
-1. Open `index.html` in any modern web browser.
-2. Ensure `style.css` and `script.js` are in the same directory.
+## ✨ Features
+
+* 🔐 Login & Signup (localStorage-based auth)
+* 📊 Calorie Dashboard with progress tracking
+* 🍽️ Meal Logging System
+* 🤖 Smart Meal Recommendations (with images)
+* 🌙 Dark Mode Support
+* 📱 Fully Responsive Design
+* ⚡ Smooth Animations & Modern UI
+
+---
+
+## 🧠 Smart Recommendation Engine
+
+The system suggests meals based on:
+
+* Time of day
+* Remaining calories
+* User fitness goal
+
+Each recommendation includes:
+
+* 🍽️ Meal name
+* 🔥 Calories
+* 🖼️ Image
+* 💡 Explanation
+
+---
+
+## 🛠️ Tech Stack
+
+* HTML5
+* CSS3 (Modern UI + Animations)
+* JavaScript (Vanilla)
+* LocalStorage (Data persistence)
+
+
+---
+
+## 🚀 How to Run
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/MuktaRedij/CalorieCraft.git
+```
+
+2. Open `index.html` in your browser
+
+---
+
+## 📌 Future Improvements
+
+* Backend integration (Node.js / Firebase)
+* Real authentication system
+* API-based food database
+* AI-powered recommendations
+
+---
+
+## 👨‍💻 Author
+
+Mukta Redij
+
+---
+
+## ⭐ If you like this project, give it a star!
