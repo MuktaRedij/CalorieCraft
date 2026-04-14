@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalorieCraft AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ionicons for high quality icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+</head>
+<body>
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Auth Wrapper -->
+    <div id="auth-wrapper" class="auth-wrapper hidden">
+        <div class="auth-bg-overlay"></div>
+        <div class="auth-card-container">
+            
+            <!-- Login View -->
+            <div id="login-view" class="auth-card">
+                <div class="auth-header">
+                    <div class="logo-icon"><ion-icon name="leaf"></ion-icon></div>
+                    <h2>Welcome to CalorieCraft</h2>
+                    <p>Enter your credentials to access your dashboard.</p>
+                </div>
+                <form id="login-form">
+                    <div class="input-group">
+                        <input type="email" id="login-email" required>
+                        <label>Email Address</label>
+                    </div>
+                    <div class="input-group pass-group">
+                        <input type="password" id="login-pwd" required>
+                        <label>Password</label>
+                        <button type="button" class="toggle-pass" onclick="window.togglePassword('login-pwd', this)">
+                            <ion-icon name="eye"></ion-icon>
+                        </button>
+                    </div>
+                    <div class="auth-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember-me"> Remember me
+                        </label>
+                        <a href="#" class="forgot-pwd">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width ripple" id="btn-login-submit">
+                        Sign In <ion-icon name="log-in-outline" class="btn-icon-right"></ion-icon>
+                    </button>
+                </form>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" id="go-to-signup">Create one</a></p>
+                </div>
+            </div>
+
+            <!-- Signup View -->
+            <div id="signup-view" class="auth-card hidden">
+                <div class="auth-header">
+                    <div class="logo-icon"><ion-icon name="leaf"></ion-icon></div>
+                    <h2>Start Your Journey</h2>
+                    <p>Create a local account to save your macros.</p>
+                </div>
+                <form id="signup-form">
+                    <div class="input-group">
+                        <input type="text" id="reg-name" required>
+                        <label>Full Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="reg-email" required>
+                        <label>Email Address</label>
+                    </div>
+                    <div class="input-group pass-group">
+                        <input type="password" id="reg-pwd" required minlength="6">
+                        <label>Password (min 6 chars)</label>
+                        <button type="button" class="toggle-pass" onclick="window.togglePassword('reg-pwd', this)">
+                            <ion-icon name="eye"></ion-icon>
+                        </button>
+                    </div>
+                    <div class="input-group pass-group">
+                        <input type="password" id="reg-cpwd" required>
+                        <label>Confirm Password</label>
+                        <button type="button" class="toggle-pass" onclick="window.togglePassword('reg-cpwd', this)">
+                            <ion-icon name="eye"></ion-icon>
+                        </button>
+                    </div>
+                    <button type="submit" class="btn btn-secondary full-width ripple" id="btn-signup-submit">
+                        Create Account
+                    </button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" id="go-to-login">Sign in here</a></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Main App Wrapper -->
+    <div id="app-wrapper" class="app-wrapper hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon"><ion-icon name="leaf"></ion-icon></div>
+                    <h2>CalorieCraft <span>AI</span></h2>
+                </div>
+                <button class="close-sidebar-btn" id="close-sidebar"><ion-icon name="close"></ion-icon></button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-tab="dashboard">
+                    <ion-icon name="grid"></ion-icon> <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="profile">
+                    <ion-icon name="person"></ion-icon> <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="meals">
+                    <ion-icon name="restaurant"></ion-icon> <span>Meals</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="recommendations">
+                    <ion-icon name="sparkles"></ion-icon> <span>Recommendations</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="analytics">
+                    <ion-icon name="bar-chart"></ion-icon> <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="settings">
+                    <ion-icon name="settings"></ion-icon> <span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="smart-tip">
+                    <ion-icon name="bulb"></ion-icon>
+                    <p>Tip: Hydrate before meals to manage appetite.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content wrapper -->
+        <div class="main-wrapper">
+            <header class="top-nav">
+                <button class="hamburger-btn" id="open-sidebar"><ion-icon name="menu"></ion-icon></button>
+                <div class="top-nav-right">
+                    <button id="theme-toggle-top" class="icon-btn ripple"><ion-icon name="moon"></ion-icon></button>
+                    <div class="avatar-menu" style="display: flex; gap: 1rem; align-items: center;">
+                        <button id="logout-btn" class="icon-btn ripple" title="Sign Out"><ion-icon name="log-out-outline"></ion-icon></button>
+                        <div class="avatar"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80" alt="User"></div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-area">
+                
+                <!-- Dashboard Tab -->
+                <section id="tab-dashboard" class="tab-content active view-transition">
+                    <div class="welcome-banner card">
+                        <div class="banner-text">
+                            <h1 id="dash-welcome-title">Welcome back! 👋</h1>
+                            <p>You're doing great today. Let's hit your macro goals.</p>
+                        </div>
+                        <div class="banner-img-container">
+                            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80" alt="Healthy Food" class="banner-img" loading="lazy">
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card ring-card">
+                            <h2>Daily Calories</h2>
+                            <div class="svg-ring-container">
+                                <svg class="progress-ring" width="180" height="180">
+                                    <circle class="progress-ring__bg" stroke-width="12" fill="transparent" r="76" cx="90" cy="90"/>
+                                    <circle class="progress-ring__circle" id="calorie-ring" stroke-width="12" fill="transparent" r="76" cx="90" cy="90"/>
+                                </svg>
+                                <div class="ring-text">
+                                    <span class="ring-consumed" id="dash-consumed">0</span>
+                                    <span class="ring-divider">/</span>
+                                    <span class="ring-target" id="dash-target">0</span>
+                                    <span class="ring-label">kcal</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-stats-grid">
+                            <div class="stat-card card">
+                                <div class="stat-icon orange"><ion-icon name="flame"></ion-icon></div>
+                                <div>
+                                    <p class="stat-label">Remaining</p>
+                                    <h3 class="stat-val highlight-orange" id="dash-remaining">0</h3>
+                                </div>
+                            </div>
+                            <div class="stat-card card">
+                                <div class="stat-icon green"><ion-icon name="body"></ion-icon></div>
+                                <div>
+                                    <p class="stat-label">Current BMI</p>
+                                    <h3 class="stat-val" id="dash-bmi">0.0</h3>
+                                </div>
+                            </div>
+                            <div class="stat-card card">
+                                <div class="stat-icon blue"><ion-icon name="water"></ion-icon></div>
+                                <div>
+                                    <p class="stat-label">Hydration Goal</p>
+                                    <h3 class="stat-val">2.5L</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Profile Tab -->
+                <section id="tab-profile" class="tab-content view-transition">
+                    <div class="page-header">
+                        <h2>User Profile</h2>
+                        <p>Tell us about yourself to calibrate the AI engine.</p>
+                    </div>
+                    <div class="grid-2col">
+                        <div class="card">
+                            <form id="profile-form">
+                                <div class="form-row">
+                                    <div class="input-group">
+                                        <input type="number" id="weight" required>
+                                        <label>Weight (kg)</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="number" id="height" required>
+                                        <label>Height (cm)</label>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="input-group">
+                                        <input type="number" id="age" required>
+                                        <label>Age</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <select id="gender" required>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                        <label class="active-label">Gender</label>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <select id="goal" required>
+                                        <option value="lose">Weight Loss</option>
+                                        <option value="maintain" selected>Maintain Weight</option>
+                                        <option value="gain">Weight Gain</option>
+                                    </select>
+                                    <label class="active-label">Primary Goal</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary ripple full-width">Save Profile</button>
+                            </form>
+                        </div>
+                        <div class="card summary-card gradient-card">
+                            <h3>Your Status</h3>
+                            <div class="status-wrap">
+                                <div class="status-item"><span>Target Calories:</span> <strong id="profile-target">--</strong></div>
+                                <div class="status-item"><span>Current BMI:</span> <strong id="profile-bmi">--</strong></div>
+                                <div class="status-item"><span>Estimated BMR:</span> <strong id="profile-bmr">--</strong></div>
+                            </div>
+                            <div class="status-illustration" id="illustration-profile"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Meals Tab -->
+                <section id="tab-meals" class="tab-content view-transition">
+                    <div class="page-header flex-header">
+                        <div>
+                            <h2>Meal Tracker</h2>
+                            <p>Record your food intake for today.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-meals-layout">
+                        <!-- Add form -->
+                        <div class="card add-meal-card">
+                            <h3>Log a Meal</h3>
+                            <form id="meal-form">
+                                <div class="input-group">
+                                    <input type="text" id="meal-name" required>
+                                    <label>What did you eat?</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="number" id="meal-calories" required>
+                                    <label>Calories</label>
+                                </div>
+                                <div class="type-selector">
+                                    <label>Meal Type:</label>
+                                    <div class="radio-chips">
+                                        <input type="radio" id="type-breakfast" name="meal-type" value="breakfast" checked>
+                                        <label for="type-breakfast" class="chip">Breakfast</label>
+                                        
+                                        <input type="radio" id="type-lunch" name="meal-type" value="lunch">
+                                        <label for="type-lunch" class="chip">Lunch</label>
+                                        
+                                        <input type="radio" id="type-dinner" name="meal-type" value="dinner">
+                                        <label for="type-dinner" class="chip">Dinner</label>
+                                        
+                                        <input type="radio" id="type-snack" name="meal-type" value="snack">
+                                        <label for="type-snack" class="chip">Snack</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary ripple full-width m-top">Add Meal <ion-icon name="add-circle"></ion-icon></button>
+                            </form>
+                        </div>
+
+                        <!-- List Area -->
+                        <div class="meals-list-area">
+                            <div class="filter-bar">
+                                <button class="filter-btn active" data-filter="all">All</button>
+                                <button class="filter-btn" data-filter="breakfast">Breakfast</button>
+                                <button class="filter-btn" data-filter="lunch">Lunch</button>
+                                <button class="filter-btn" data-filter="dinner">Dinner</button>
+                                <button class="filter-btn" data-filter="snack">Snack</button>
+                            </div>
+                            <div id="meals-grid" class="meals-grid">
+                                <!-- Meals go here -->
+                            </div>
+                            <!-- Empty State -->
+                            <div id="meals-empty" class="empty-state">
+                                <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-plate-7364455-6028882.png" alt="Empty" width="150" style="opacity: 0.5; filter: grayscale(1);">
+                                <p>No meals logged yet today.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recommendations Tab -->
+                <section id="tab-recommendations" class="tab-content view-transition">
+                    <div class="page-header flex-header">
+                        <div>
+                            <h2>Smart Recommendations <ion-icon name="sparkles" class="sparkle-icon"></ion-icon></h2>
+                            <p>AI-driven meal suggestions based on your remaining macros and schedule.</p>
+                        </div>
+                        <button class="btn btn-secondary ripple" id="regenerate-rec"><ion-icon name="refresh"></ion-icon> Regenerate</button>
+                    </div>
+
+                    <div class="rec-wrapper">
+                        <div id="rec-skeleton" class="rec-card skeleton-card">
+                            <div class="skeleton-img"></div>
+                            <div class="skeleton-text title"></div>
+                            <div class="skeleton-text"></div>
+                            <div class="skeleton-text tag"></div>
+                        </div>
+
+                        <div id="rec-actual" class="rec-card card hidden">
+                            <div class="rec-img-box">
+                                <img id="rec-img" src="" alt="Recommendation" loading="lazy">
+                                <div class="rec-calories-badge"><span id="rec-cals"></span> kcal</div>
+                            </div>
+                            <div class="rec-info">
+                                <h3 id="rec-title">--</h3>
+                                <div class="rec-tags">
+                                    <span class="badge badge-primary"><ion-icon name="time"></ion-icon> <span id="rec-time-badge">Dinner</span></span>
+                                    <span class="badge badge-secondary"><ion-icon name="checkmark-circle"></ion-icon> AI Recommended</span>
+                                </div>
+                                <div class="rec-reason-box">
+                                    <p id="rec-desc">--</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics Tab -->
+                <section id="tab-analytics" class="tab-content view-transition">
+                     <div class="page-header">
+                        <h2>Weekly Analytics</h2>
+                        <p>Track your caloric intake trends over the last 7 days.</p>
+                    </div>
+                    <div class="card chart-card">
+                        <div class="chart-header">
+                            <h3>Calorie History</h3>
+                        </div>
+                        <div class="bar-chart" id="weekly-chart">
+                            <!-- Bars generated by JS -->
+                        </div>
+                        <div class="chart-insights" id="chart-insight-box">
+                            <ion-icon name="trending-up"></ion-icon> You are averaging well below your maintenance threshold!
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Tab -->
+                <section id="tab-settings" class="tab-content view-transition">
+                    <div class="page-header">
+                        <h2>App Settings</h2>
+                    </div>
+                    <div class="card settings-card">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h3>Dark Mode</h3>
+                                <p>Toggle the appearance of the application.</p>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="theme-switch-checkbox">
+                                <label for="theme-switch-checkbox" class="slider"></label>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h3>Clear Application Data</h3>
+                                <p>Erase all meals and profile settings from local storage. Cannot be undone.</p>
+                            </div>
+                            <button class="btn btn-danger ripple" id="reset-data-btn">Reset All Data</button>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

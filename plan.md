@@ -1,0 +1,22 @@
+# Execution Plan
+
+- [x] **PHASE 0: PROJECT INITIALIZATION**
+  - [x] Create core files (index.html, style.css, script.js, readme).
+- [x] **PHASE 1: UI DEVELOPMENT (HTML + CSS)**
+  - [x] Define a modern, card-based glassmorphic layout.
+  - [x] Implement responsive layout & typography.
+- [x] **PHASE 2: CORE FUNCTIONALITY (JavaScript)**
+  - [x] User Profile Handling (TDEE/BMI calculations).
+  - [x] Rule-Based Recommendation Engine context extraction.
+  - [x] Meal Tracking array management.
+  - [x] Dynamic DOM rendering & animations.
+- [x] **PHASE 3: DATA MANAGEMENT**
+  - [x] Integrate HTML5 LocalStorage for persistence.
+- [x] **PHASE 4: APPLICATION FLOW**
+  - [x] Validated lifecycle from input -> tracking -> recommendation.
+- [x] **PHASE 5: EDGE CASE HANDLING**
+  - [x] Negative calorie states flagged. Empty inputs handled.
+- [x] **PHASE 6: PERFORMANCE OPTIMIZATION**
+  - [x] Vanilla JS approach with minimal repainting.
+- [x] **PHASE 7: USER EXPERIENCE ENHANCEMENT**
+  - [x] Pulsing buttons, sliding list items, CSS variable theming.
